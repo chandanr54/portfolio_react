@@ -32,7 +32,6 @@ const projectsData = [
 const Projects = () => {
   const [index, setIndex] = useState(0);
   const intervalRef = useRef(null);
-
   const visibleCount = 3;
 
   useEffect(() => {

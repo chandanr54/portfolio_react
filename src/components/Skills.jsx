@@ -1,5 +1,7 @@
-import React from "react";
+import React, { use, useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { useParams } from "react-router-dom";
+import * as api from "../service/api";
 
 const skillsData = [
   { name: "Java", level: 90 },
@@ -10,6 +12,20 @@ const skillsData = [
 ];
 
 const Skills = () => {
+    const { username } = useParams();
+    const [skills, setSkills] = useState([]); // ✅ state
+
+  useEffect(() => {
+    api.getSkills(username)
+      .then((response) => {
+        console.log("Skills data:", response.data);
+        setSkills(response.data); // ✅ set data here
+      })
+      .catch((error) => {
+        console.error("Error fetching skills:", error);
+      });
+  }, [username]);
+
   return (
     <section
       id="skills"
@@ -39,7 +55,7 @@ const Skills = () => {
         {/* SKILLS GRID */}
         <div className="grid md:grid-cols-2 gap-8 mt-12">
 
-          {skillsData.map((skill, index) => (
+          {skills.map((skill, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 40 }}
@@ -50,7 +66,7 @@ const Skills = () => {
               {/* Skill Name */}
               <div className="flex justify-between mb-2">
                 <span className="text-lg font-semibold text-gray-700 dark:text-white">
-                  {skill.name}
+                  {skill.skillName}
                 </span>
                 <span className="text-sm text-gray-500 dark:text-gray-300">
                   {skill.level}%
@@ -74,7 +90,7 @@ const Skills = () => {
         {/* TECH STACK CARDS */}
         <div className="mt-16 grid grid-cols-2 md:grid-cols-5 gap-6 text-center">
 
-          {["Java", "Spring Boot", "React", "MySQL", "Docker"].map((tech, i) => (
+          {skills.map((tech, i) => (
             <motion.div
               key={i}
               initial={{ opacity: 0, scale: 0.8 }}
@@ -84,7 +100,7 @@ const Skills = () => {
               className="p-4 rounded-xl bg-white dark:bg-gray-900 shadow-md transition"
             >
               <p className="text-gray-700 dark:text-white font-medium">
-                {tech}
+                {tech.skillName}
               </p>
             </motion.div>
           ))}

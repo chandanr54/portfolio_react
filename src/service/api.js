@@ -4,6 +4,7 @@ console.log("Service Run")
 //  http://localhost:8080/api/v1/user/chandan54
 const BASE_URL = ' http://localhost:8080';
 const USER_URL = `${BASE_URL}/api/v1/user/`;
+const SKILL_URL = `${BASE_URL}/api/v1/skill/`;
 
 
 const createHeaders = () => {
@@ -13,5 +14,8 @@ const createHeaders = () => {
 }
 
 export const getUser=(username)=> axios.get(`${USER_URL}${username}`);
+
+
+export const getSkills=(username)=> axios.get(`${SKILL_URL}username/${username}`);
 
 
