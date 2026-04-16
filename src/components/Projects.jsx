@@ -1,35 +1,37 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { use, useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
+import * as api from "../service/api";
+import toast from "react-hot-toast";
 
-const projectsData = [
-  {
-    title: "Patient Management System",
-    desc: "Spring Boot app to manage patients and appointments.",
-    tech: ["Spring Boot", "MySQL", "JWT"],
-  },
-  {
-    title: "Portfolio Website",
-    desc: "React + Tailwind portfolio with dark mode.",
-    tech: ["React", "Tailwind"],
-  },
-  {
-    title: "School Management",
-    desc: "Microservices-based system for students.",
-    tech: ["Spring Boot", "Docker"],
-  },
-  {
-    title: "Chat App",
-    desc: "Realtime chat using WebSocket.",
-    tech: ["Spring Boot", "WebSocket"],
-  },
-  {
-    title: "E-Commerce",
-    desc: "Full-stack shopping platform.",
-    tech: ["React", "Spring Boot"],
-  },
-];
+// const projectsData = [
+//   {
+//     title: "Patient Management System",
+//     desc: "Spring Boot app to manage patients and appointments.",
+//     tech: ["Spring Boot", "MySQL", "JWT"],
+//   },
+//   {
+//     title: "Portfolio Website",
+//     desc: "React + Tailwind portfolio with dark mode.",
+//     tech: ["React", "Tailwind"],
+//   },
+//   {
+//     title: "School Management",
+//     desc: "Microservices-based system for students.",
+//     tech: ["Spring Boot", "Docker"],
+//   },
+//   {
+//     title: "Chat App",
+//     desc: "Realtime chat using WebSocket.",
+//     tech: ["Spring Boot", "WebSocket"],
+//   },
+//   {
+//     title: "E-Commerce",
+//     desc: "Full-stack shopping platform.",
+//     tech: ["React", "Spring Boot"],
+//   },
+// ];
 
-const Projects = () => {
+const Projects = ({ userId }) => {
   const [index, setIndex] = useState(0);
   const intervalRef = useRef(null);
   const visibleCount = 3;
@@ -64,13 +66,32 @@ const Projects = () => {
     );
   };
 
+
+
+  const[projectsData, setProjectsData] = useState([]);
+  useEffect(()=>{
+    api.getProjects(userId).then((response)=>{
+
+      console.log("Projects data:", response.data);
+      setProjectsData(response.data);
+    }).catch((error)=>{
+      toast.error("Failed to fetch projects");
+      console.error("Error fetching projects:", error);
+    });
+
+  },[userId]);
+
   return (
     <section
       id="projects"
       className="py-24 px-6 min-h-screen flex items-center bg-gradient-to-b from-gray-100 to-white dark:from-gray-900 dark:to-gray-800"
     >
       <div className="max-w-6xl mx-auto w-full">
-
+        {userId && (
+          <p className="text-gray-600 dark:text-gray-300 text-center">
+            Projects for User ID: {userId}
+          </p>
+        )}
         {/* TITLE */}
         <motion.h2
           initial={{ opacity: 0, y: -30 }}
@@ -133,16 +154,16 @@ const Projects = () => {
                   {/* CONTENT */}
                   <div className="p-5">
                     <h3 className="text-xl font-semibold dark:text-white">
-                      {project.title}
+                      {project.projectName}
                     </h3>
 
                     <p className="mt-2 text-gray-600 dark:text-gray-300 text-sm">
-                      {project.desc}
+                      {project.projectDescription}
                     </p>
 
                     {/* TECH */}
                     <div className="mt-4 flex flex-wrap gap-2">
-                      {project.tech.map((t, idx) => (
+                      {project.projectsTechnology.map((t, idx) => (
                         <span
                           key={idx}
                           className="px-2 py-1 text-xs bg-blue-100 text-blue-600 dark:bg-gray-700 dark:text-white rounded"
@@ -157,6 +178,7 @@ const Projects = () => {
                       <motion.button
                         whileHover={{ scale: 1.1 }}
                         className="px-4 py-2 text-sm bg-gray-800 text-white rounded"
+                        onClick={()=>window.open(projectsData.gitUrl,"_blank")}
                       >
                         GitHub
                       </motion.button>
@@ -164,6 +186,7 @@ const Projects = () => {
                       <motion.button
                         whileHover={{ scale: 1.1 }}
                         className="px-4 py-2 text-sm bg-blue-500 text-white rounded"
+                        onClick={() => window.open(projectsData.projectUrl, "_blank")}
                       >
                         Live
                       </motion.button>

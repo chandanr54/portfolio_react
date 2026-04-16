@@ -2,7 +2,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { FaGithub, FaLinkedin, FaTwitter } from "react-icons/fa";
 
-const Footer = () => {
+const Footer = ({users}) => {
   return (
     <footer className="relative bg-gradient-to-b from-gray-100 to-white dark:from-gray-900 dark:to-gray-800 pt-16 pb-8 px-6 overflow-hidden">
 
@@ -18,7 +18,7 @@ const Footer = () => {
           whileInView={{ opacity: 1, y: 0 }}
           className="text-2xl font-bold text-gray-800 dark:text-white"
         >
-          Chandan Kumar 🚀
+          {users?.name || "Chandan Kumar"} {users?.lastName} 🚀
         </motion.h2>
 
         {/* TAGLINE */}
@@ -40,7 +40,7 @@ const Footer = () => {
         >
           <motion.a
             whileHover={{ scale: 1.3 }}
-            href="https://github.com/"
+            href={users?.gitHubLink}
             target="_blank"
             className="text-gray-700 dark:text-white hover:text-blue-500"
           >
@@ -49,7 +49,7 @@ const Footer = () => {
 
           <motion.a
             whileHover={{ scale: 1.3 }}
-            href="https://linkedin.com/"
+            href={users?.linkdinAddress}
             target="_blank"
             className="text-gray-700 dark:text-white hover:text-blue-500"
           >

@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { TypeAnimation } from "react-type-animation";
 
-const About = () => {
+const About = ({skills}) => {
   return (
     <section
       id="about"
@@ -80,13 +80,13 @@ const About = () => {
             transition={{ delay: 0.7 }}
             className="mt-6 flex flex-wrap gap-3"
           >
-            {["Java", "Spring Boot", "React", "MySQL", "Docker"].map(
+            {skills.map(
               (skill, i) => (
                 <span
                   key={i}
                   className="px-4 py-2 bg-blue-100 text-blue-600 dark:bg-gray-700 dark:text-white rounded-full text-sm font-medium hover:scale-105 transition"
                 >
-                  {skill}
+                  {skill.skillName}
                 </span>
               )
             )}

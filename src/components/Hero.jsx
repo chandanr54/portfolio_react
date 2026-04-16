@@ -3,24 +3,13 @@ import * as api from "../service/api";
 import { useParams, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 
-const Hero = () => {
-  const { username } = useParams();
+const Hero = ({users}) => {
+ 
   const navigate = useNavigate();
-  const [user, setUser] = useState(null);
-
-  useEffect(() => {
-    api.getUser(username)
-      .then((response) => {
-        setUser(response.data);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-        navigate("/"); // or NoUser page
-      });
-  }, [username]);
+  
 
   // 🔄 Loading state
-  if (!user) {
+  if (!users) {
     return (
       <div className="h-screen flex items-center justify-center dark:text-white">
         Loading...
@@ -44,7 +33,7 @@ const Hero = () => {
           <h1 className="text-4xl md:text-6xl font-bold leading-tight">
             Hi, I'm{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-green-400">
-              {user.name}
+              {users.name}{users.lastName}
             </span>
           </h1>
 
@@ -68,7 +57,7 @@ const Hero = () => {
             performance.
           </motion.p>
 
-          {/* BUTTONS */}
+          {/* BUTTONS 
           <motion.div
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
@@ -88,7 +77,7 @@ const Hero = () => {
             >
               Contact Me
             </a>
-          </motion.div>
+          </motion.div>*/}
         </motion.div>
 
         {/* RIGHT IMAGE */}

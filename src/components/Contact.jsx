@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
+import toast from "react-hot-toast";
 
-const Contact = () => {
+const Contact = ({users}) => {
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -15,7 +16,8 @@ const Contact = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(form);
-    alert("Message Sent Successfully 🚀");
+    //alert("Message Sent Successfully 🚀");
+    toast.success("Message Sent Successfully 🚀");
     setForm({ name: "", email: "", message: "" });
   };
 
@@ -46,23 +48,23 @@ const Contact = () => {
 
           {/* CONTACT INFO */}
           <div className="mt-8 space-y-4 text-gray-700 dark:text-gray-300">
-            <p>📧 Email: your@email.com</p>
-            <p>📱 Phone: +91 9876543210</p>
-            <p>📍 Location: India</p>
+            <p>📧 Email: {users?.email}</p>
+            <p>📱 Phone: {users?.phone}</p>
+            <p>📍 Location: {users?.address}</p>
           </div>
 
           {/* SOCIAL */}
           <div className="mt-6 flex gap-4">
             <motion.a
               whileHover={{ scale: 1.2 }}
-              href="#"
+              href={users?.linkdinAddress}
               className="text-blue-500"
             >
               LinkedIn
             </motion.a>
             <motion.a
               whileHover={{ scale: 1.2 }}
-              href="#"
+              href={users?.gitHubLink}
               className="text-gray-800 dark:text-white"
             >
               GitHub
