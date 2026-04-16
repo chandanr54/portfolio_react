@@ -15,7 +15,8 @@ import { u } from "framer-motion/client";
 
 const Home = () => {
 
-  const { username } = useParams();
+  //const { username } = useParams();
+  const username = "chandan54"; // hardcoded for now, can be dynamic later
     const [skills, setSkills] = useState([]); 
     
     
