@@ -95,6 +95,8 @@ const Skills = ({ skills }) => {
 
       </div>
     </section>
+
+    
   );
 };
 
