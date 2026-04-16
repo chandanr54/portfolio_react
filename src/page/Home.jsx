@@ -27,6 +27,8 @@ const Home = () => {
     userSkills(username); // ✅ fetch skills on mount
     fetchUser(username); // ✅ fetch user data on mount
   }, [username]);
+  
+  console.log("User data in Home.jsx:", username); // ✅ log user data to verify it's being set
 
   const userSkills = (username)=>{
  api.getSkills(username)
@@ -38,12 +40,6 @@ const Home = () => {
         console.error("Error fetching skills:", error);
       });
   }
-
-
-  
-    useEffect(() => {
-     
-    }, [username]);
 
     const fetchUser = (username) => {
        api.getUser(username)

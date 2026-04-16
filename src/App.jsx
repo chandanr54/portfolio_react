@@ -17,8 +17,8 @@ function App() {
     <><Toaster position="top-right" />
      <BrowserRouter>
       <Routes>
-        <Route path="/:username" element={<Home />} />
-         <Route path="/" element={<NoUserFound />} />
+        <Route path="/" element={<Home />} />
+       {/*  <Route path="/" element={<NoUserFound />} />*/}
          <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
       </Routes>
